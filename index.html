@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crocodile Facts</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #004d40; /* Dark teal text color */
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px; /* Limit the width */
+            transition: transform 0.3s;
+        }
+
+        .container:hover {
+            transform: scale(1.02); /* Slightly enlarge on hover */
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #00796b; /* Teal color for the title */
+        }
+
+        .fact-display {
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: bold;
+            min-height: 60px; /* Ensure space for the fact display */
+            color: #00796b; /* Teal color for the facts */
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #00796b; /* Teal button */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #004d40; /* Darker teal on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
+        }
+
+        button:active {
+            transform: translateY(0); /* Reset lift effect on click */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crocodile Facts</h1>
+        <div id="factDisplay" class="fact-display">Click the button to see a random fact!</div>
+        <button id="factButton">Get Random Fact</button>
+    </div>
+    <script>
+        const facts = [
+            "Crocodiles are reptiles that belong to the family Crocodylidae.",
+            "They are found in tropical regions of Africa, Asia, the Americas, and Australia.",
+            "Crocodiles can live for over 70 years in the wild.",
+            "They are carnivorous and primarily feed on fish, birds, and mammals.",
+            "Crocodiles have powerful jaws that can exert tremendous pressure.",
+            "They are excellent swimmers and can hold their breath underwater for over an hour.",
+            "Crocodiles are ectothermic, meaning their body temperature is regulated by their environment.",
+            "They have a unique ability to see in the dark, thanks to a special layer of tissue in their eyes.",
+            "Crocodiles communicate through a variety of vocalizations, including hissing and growling.",
+            "Some species of crocodiles can reach lengths of over 20 feet (6 meters)."
+        ];
+
+        let attempts = 0;
+        const factDisplay = document.getElementById('factDisplay');
+        const factButton = document.getElementById('factButton');
+
+        factButton.addEventListener('click', displayRandomFact);
+
+        function displayRandomFact() {
+            if (attempts < 3) {
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                factDisplay.textContent = facts[randomIndex];
+                attempts++;
+                moveButton();
+            } else {
+                factButton.style.position = 'static'; // Stop moving the button after 3 attempts
+            }
+        }
+
+        function moveButton() {
+            const randomX = Math.random() * (window.innerWidth - factButton.offsetWidth);
+            const randomY = Math.random() * (window.innerHeight - factButton.offsetHeight);
+            factButton.style.position = 'absolute';
+            factButton.style.left = `${randomX}px`;
+            factButton.style.top = `${randomY}px`;
+        }
+
+        // Move button when mouse approaches
+        document.addEventListener('mousemove', (event) => {
+            if (attempts < 3) {
+                const buttonRect = factButton.getBoundingClientRect();
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
+
+                if (mouseX >= buttonRect.left && mouseX <= buttonRect.right &&
+                    mouseY >= buttonRect.top && mouseY <= buttonRect.bottom) {
+                    moveButton();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

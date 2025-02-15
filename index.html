@@ -1,0 +1,119 @@
+Sure! Here’s the combined `index.html` file with the CSS and JavaScript included within it:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crocodile Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .fact-display {
+            font-size: 1.5em;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crocodile Facts</h1>
+        <div id="factDisplay" class="fact-display">Click the button to see a random fact!</div>
+        <button id="factButton">Get Random Fact</button>
+    </div>
+    <script>
+        const facts = [
+            "Crocodiles are reptiles that belong to the family Crocodylidae.",
+            "They are found in tropical regions of Africa, Asia, the Americas, and Australia.",
+            "Crocodiles can live for over 70 years in the wild.",
+            "They are carnivorous and primarily feed on fish, birds, and mammals.",
+            "Crocodiles have powerful jaws that can exert tremendous pressure.",
+            "They are excellent swimmers and can hold their breath underwater for over an hour.",
+            "Crocodiles are ectothermic, meaning their body temperature is regulated by their environment.",
+            "They have a unique ability to see in the dark, thanks to a special layer of tissue in their eyes.",
+            "Crocodiles communicate through a variety of vocalizations, including hissing and growling.",
+            "Some species of crocodiles can reach lengths of over 20 feet (6 meters)."
+        ];
+
+        let attempts = 0;
+        const factDisplay = document.getElementById('factDisplay');
+        const factButton = document.getElementById('factButton');
+
+        factButton.addEventListener('click', displayRandomFact);
+
+        function displayRandomFact() {
+            if (attempts < 3) {
+                const randomIndex = Math.floor(Math.random() * facts.length);
+                factDisplay.textContent = facts[randomIndex];
+                attempts++;
+                moveButton();
+            } else {
+                factButton.style.position = 'static'; // Stop moving the button after 3 attempts
+            }
+        }
+
+        function moveButton() {
+            const randomX = Math.random() * (window.innerWidth - factButton.offsetWidth);
+            const randomY = Math.random() * (window.innerHeight - factButton.offsetHeight);
+            factButton.style.position = 'absolute';
+            factButton.style.left = `${randomX}px`;
+            factButton.style.top = `${randomY}px`;
+        }
+
+        // Move button when mouse approaches
+        document.addEventListener('mousemove', (event) => {
+            if (attempts < 3) {
+                const buttonRect = factButton.getBoundingClientRect();
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
+
+                if (mouseX >= buttonRect.left && mouseX <= buttonRect.right &&
+                    mouseY >= buttonRect.top && mouseY <= buttonRect.bottom) {
+                    moveButton();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+```
+
+### Summary
+- The CSS styles are now included within a `<style>` tag in the `<head>` section.
+- The JavaScript code is included within a `<script>` tag at the end of the `<body>` section.
+- You can save this as `index.html` and open it in a web browser to see the functionality in action.
+
+Let me know if you need any further modifications or assistance!
